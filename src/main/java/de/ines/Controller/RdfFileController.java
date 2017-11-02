@@ -126,4 +126,9 @@ public class RdfFileController {
         }
     }
 
+    @RequestMapping(value = "/reason", method = RequestMethod.POST)
+    public String reason(@RequestParam("fileName") String fileName, @RequestParam("file") MultipartFile file){
+        return rdfFileService.reason(fileName, file);
+    }
+
 }
