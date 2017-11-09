@@ -2,6 +2,7 @@ package de.ines.services;
 
 import de.ines.domain.RdfFile;
 import de.ines.repositories.RdfFileRepository;
+import org.apache.jena.propertytable.lang.CSV2RDF;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.reasoner.Reasoner;
 import org.apache.jena.reasoner.rulesys.GenericRuleReasoner;
@@ -12,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -25,8 +24,12 @@ public class RdfFileService {
     @Autowired
     RdfFileRepository rdfFileRepository;
 
+    public RdfFileService(){
+        CSV2RDF.init();
+
+    }
+
     public ArrayList<RdfFile> loadRdfFiles(){
-        //rdfFileRepository.save(new RdfFile("test","testTags",5.0,"10.05.17", 18,"HambrechtAG", "rdf"));
         ArrayList<RdfFile> result = new ArrayList<>();
         Iterator<RdfFile> files = rdfFileRepository.findAll().iterator();
         while(files.hasNext()){
@@ -39,8 +42,30 @@ public class RdfFileService {
         rdfFileRepository.save(file);
     }
 
-    public File loadSingle(String name){
-        return new File("src/main/resources/uploads/"+name);
+    public String loadSingle(String name) throws IOException {
+        File result =  new File("src/main/resources/uploads/"+name);
+
+        BufferedReader br = new BufferedReader(new FileReader(result));
+        try {
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+
+            while (line != null) {
+                sb.append(line);
+                sb.append("\n");
+                System.out.println(line);
+                line = br.readLine();
+            }
+            return sb.toString();
+        } finally {
+            br.close();
+        }
+
+        /*final Model model = ModelFactory.createDefaultModel();
+        model.read("src/main/resources/uploads/"+name);
+        StringWriter out = new StringWriter();
+        model.write(out);
+        return out.toString();*/
     }
 
     public String reason(String fileName, MultipartFile file){

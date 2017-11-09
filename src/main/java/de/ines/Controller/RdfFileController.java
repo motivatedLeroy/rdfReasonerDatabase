@@ -15,15 +15,14 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
+
+import static java.lang.System.out;
 
 
 @RestController
@@ -38,16 +37,9 @@ public class RdfFileController {
     }
 
     @RequestMapping(value = "/loadSingle", method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public byte[] loadSingle(@RequestParam("fileName") String fileName){
-        Path path = Paths.get("src/main/resources/uploads/"+fileName);
-        byte[] data = new byte[0];
-        try {
-            data = Files.readAllBytes(path);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return data;
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String loadSingle(@RequestParam("fileName") String fileName) throws IOException {
+        return rdfFileService.loadSingle(fileName);
     }
 
     @RequestMapping(value = "/saveRdfFile", method = RequestMethod.POST)
