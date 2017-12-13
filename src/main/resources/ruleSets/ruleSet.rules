@@ -1,0 +1,4 @@
+@prefix founder: <http://founder/>
+@prefix publisher: <http://publisher/>
+[rule1: (?a founder:founded ?b) (?b publisher:published ?c) -> (?a founder:erstellt_und_gemastered ?c)]
+

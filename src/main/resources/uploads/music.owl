@@ -1,0 +1,57 @@
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:owl="http://www.w3.org/2002/07/owl#"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:music="http://www.ines.com/music#">
+
+	<!-- OWL Header Example -->
+    <owl:Ontology rdf:about="http://www.ines.com/music">
+    <dc:title>The InES.com Example Music Ontology</dc:title>
+    <dc:description>An example ontology written a Master thesis</dc:description>
+    </owl:Ontology>
+
+	<!-- OWL Class Definition - Object -->
+	<owl:Class rdf:about="http://www.ines.com/music#object">
+		<rdfs:label>The Object</rdfs:label>
+		<rdfs:comment>The class of all objects.</rdfs:comment>
+	</owl:Class>
+
+	<!-- OWL Class Definition - Person -->
+    	<owl:Class rdf:about="http://www.ines.com/music#person">
+    		<rdfs:label>Person</rdfs:label>
+    		<rdfs:comment>The class of all persons.</rdfs:comment>
+    	</owl:Class>
+
+    <!-- OWL Subclass Definition - Founder -->
+    	<owl:Class rdf:about="http://www.ines.com/music#founder">
+    		<!-- Founder is a subclassification of Person -->
+    		<rdfs:subClassOf rdf:resource="http://www.ines.com/music#person"/>
+    		<rdfs:label>Founder</rdfs:label>
+    		<rdfs:comment>A person known for working at a music label.</rdfs:comment>
+    	</owl:Class>
+
+	<!-- OWL Subclass Definition - MusicLabel -->
+	<owl:Class rdf:about="http://www.ines.com/music#label">
+		<!-- Label is a subclassification of Object -->
+		<rdfs:subClassOf rdf:resource="http://www.ines.com/music#object"/>
+		<rdfs:label>Music Label</rdfs:label>
+		<rdfs:comment>Music Label, also known for publishing music.</rdfs:comment>
+	</owl:Class>
+
+	<!-- OWL Subclass Definition - CD -->
+	<owl:Class rdf:about="http://www.ines.com/music#shrubs">
+		<!-- CD is a subclassification of Object -->
+		<rdfs:subClassOf rdf:resource="http://www.ines.com/music#object"/>
+		<rdfs:label>CD</rdfs:label>
+		<rdfs:comment>CD, objects containing music.</rdfs:comment>
+	</owl:Class>
+
+
+	<!-- Individual (Instance) Example RDF Statement -->
+	<rdf:Description rdf:about="http://www.ines.com/music#Jochen_Huelder">
+		<!-- Jochen Huelder is a type (instance) of the founder classification -->
+		<rdf:type rdf:resource="http://www.ines.com/music#founder"/>
+	</rdf:Description>
+
+</rdf:RDF>
